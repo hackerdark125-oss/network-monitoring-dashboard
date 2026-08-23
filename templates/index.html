@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>NETWATCH - Network Monitoring Dashboard</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+</head>
+
+<body>
+
+<div class="scanlines" aria-hidden="true"></div>
+
+
+<header class="topbar">
+
+    <div class="brand">
+
+        <span class="brand-glyph">◉</span>
+
+        <div class="brand-text">
+            <h1>NETWATCH</h1>
+            <span class="subtitle">
+                network monitoring dashboard
+            </span>
+        </div>
+
+    </div>
+
+
+    <div class="topbar-right">
+
+        <div class="stat-chip" id="chip-cpu">
+            <span class="chip-label">CPU</span>
+            <span class="chip-value" id="cpu-value">--%</span>
+        </div>
+
+        <div class="stat-chip" id="chip-mem">
+            <span class="chip-label">MEM</span>
+            <span class="chip-value" id="mem-value">--%</span>
+        </div>
+
+        <div class="stat-chip" id="chip-hosts">
+            <span class="chip-label">HOSTS</span>
+            <span class="chip-value" id="hosts-value">--/--</span>
+        </div>
+
+        <div class="clock" id="clock">
+            --:--:--
+        </div>
+
+    </div>
+
+</header>
+
+
+<main class="grid">
+
+
+    <!-- THROUGHPUT -->
+
+    <section class="panel panel-bandwidth">
+
+        <div class="panel-head">
+
+            <h2>THROUGHPUT</h2>
+
+            <div class="legend">
+
+                <span class="legend-item">
+                    <i class="dot dot-down"></i>
+                    Download
+                </span>
+
+                <span class="legend-item">
+                    <i class="dot dot-up"></i>
+                    Upload
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="speed-readout">
+
+            <div class="speed-block">
+
+                <span
+                    class="speed-value"
+                    id="down-speed"
+                >
+                    0.00
+                </span>
+
+                <span class="speed-unit">
+                    Mbps ↓
+                </span>
+
+            </div>
+
+
+            <div class="speed-block">
+
+                <span
+                    class="speed-value"
+                    id="up-speed"
+                >
+                    0.00
+                </span>
+
+                <span class="speed-unit">
+                    Mbps ↑
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="chart-wrap">
+
+            <canvas id="bandwidthChart"></canvas>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- HOST STATUS -->
+
+    <section class="panel panel-hosts">
+
+        <div class="panel-head">
+
+            <h2>HOST STATUS</h2>
+
+        </div>
+
+
+        <table class="host-table">
+
+            <thead>
+
+                <tr>
+                    <th></th>
+                    <th>HOST</th>
+                    <th>LATENCY</th>
+                    <th>UPTIME</th>
+                </tr>
+
+            </thead>
+
+
+            <tbody id="host-table-body">
+
+                <!-- Host rows inserted by dashboard.js -->
+
+            </tbody>
+
+        </table>
+
+    </section>
+
+
+
+    <!-- LATENCY -->
+
+    <section class="panel panel-latency">
+
+        <div class="panel-head">
+
+            <h2>LATENCY</h2>
+
+        </div>
+
+
+        <div class="chart-wrap">
+
+            <canvas id="latencyChart"></canvas>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- EVENT LOG -->
+
+    <section class="panel panel-log">
+
+        <div class="panel-head">
+
+            <h2>EVENT LOG</h2>
+
+            <span class="cursor-blink">●</span>
+
+        </div>
+
+
+        <div
+            class="log-body"
+            id="log-body"
+        >
+
+            <!-- Events inserted by dashboard.js -->
+
+        </div>
+
+    </section>
+
+</main>
+
+
+
+<footer class="footer">
+
+    <span id="hostname-label">
+        --
+    </span>
+
+    <span class="footer-sep">
+        ·
+    </span>
+
+    <span>
+        polling every 3s
+    </span>
+
+    <span class="footer-sep">
+        ·
+    </span>
+
+    <span>
+        NETWATCH v1.0
+    </span>
+
+</footer>
+
+
+
+<!-- =====================================================
+     JAVASCRIPT
+     Chart.js MUST load before dashboard.js
+     ===================================================== -->
+
+<script src="{{ url_for('static', filename='js/vendor/chart.umd.min.js') }}"></script>
+
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+
+
+</body>
+</html>
